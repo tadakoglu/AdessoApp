@@ -22,3 +22,10 @@ export const selectFilteredUnits = createSelector(selectUnit, (s: UnitState) => 
 
     return condition1 && condition2;
 }))
+
+export const selectAgeItems = createSelector(selectUnit, (s1: UnitState) => {
+    return s1.ageItems
+})
+export const selectCostItems = createSelector(selectUnit, (s1: UnitState) => {
+    return s1.costItems
+})

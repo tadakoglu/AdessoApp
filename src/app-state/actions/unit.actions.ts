@@ -8,7 +8,10 @@ export const setAllItemsSuccess = createAction(
     '[Unit Page] SET_ALL_ITEMS_SUCCESS',
     props<{ items: UnitItem[] }>()
 );
-
+export const setAllItemsFailed = createAction(
+    '[Unit Page] SET_ALL_ITEMS_FAILED',
+    props<{ error: string }>()
+);
 
 export const setUnitItems = createAction(
     '[Uni Page] SET_UNIT_ITEMS',

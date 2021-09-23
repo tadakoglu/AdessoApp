@@ -1,3 +1,11 @@
+import { JsonProperty } from "json-object-mapper";
+
+export class UnitItemCapsule {
+    constructor(
+        @JsonProperty()
+        public units: UnitItem[] = []
+    ) { }
+}
 export class UnitItem {
     constructor(
         public id: number = 0,
