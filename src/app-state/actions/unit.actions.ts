@@ -1,5 +1,19 @@
 import { createAction, props } from '@ngrx/store';
+import { UnitItem } from '../entity/unitItem.model';
 
+export const setAllItems = createAction(
+    '[Unit Page] SET_ALL_ITEMS');
+
+export const setAllItemsSuccess = createAction(
+    '[Unit Page] SET_ALL_ITEMS_SUCCESS',
+    props<{ items: UnitItem[] }>()
+);
+
+
+export const setUnitItems = createAction(
+    '[Uni Page] SET_UNIT_ITEMS',
+    props<{ items: [] }>()
+);
 
 export const setAgeItems = createAction(
     '[Units Page] SET_AGE_ITEMS',

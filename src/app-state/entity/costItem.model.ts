@@ -3,5 +3,9 @@ export class CostItem {
         public name: string = '',
         public checked: boolean = false,
         public slider: number = 0
-    ) {}
+    ) { }
 }
+
+
+
+
