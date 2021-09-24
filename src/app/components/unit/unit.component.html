@@ -1,5 +1,44 @@
-{{ (ageItems ) | json }}
+<h1>{{'Units Page'}}</h1>
 
-{{ (costItems ) | json }}
+<section>
+    <h3>Ages</h3>
+    <mat-button-toggle-group (change)="setActiveAge($event.value)"  [value]="activeAge">
+        <mat-button-toggle *ngFor="let item of ageItems" value="{{item}}">{{item=='' ? 'All': item}}</mat-button-toggle>
+    </mat-button-toggle-group>
+</section>
 
-{{ (filteredUnits ) | json }}
+<section>
+    <h3>Costs</h3>
+    <div class="costItem" *ngFor="let item of costItems">
+        <mat-checkbox class="checkbox" (change)="setCostItemCheckbox(item.name, $event.checked)"
+            [checked]="item.checked">{{item.name}}</mat-checkbox>
+        <mat-slider (change)="setCostItemSlider(item.name, $event.value )" class="slider" step="1" min="0" max="200"
+            [value]="item.slider" aria-label="units"></mat-slider>
+        <span class="value">{{item.slider}}</span>
+    </div>
+</section>
+
+<section>
+    <h3>Filtered Units</h3>
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>AGE</th>
+            <th>COSTS</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of filteredUnits">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.age}}</td>
+                <td>
+                    <span class="costKeyVal" [hidden]="!item.cost.Food">&nbsp;Food: {{item.cost.Food}}</span>
+                    <span class="costKeyVal" [hidden]="!item.cost.Gold">&nbsp;Gold: {{item.cost.Gold}}</span>
+                    <span class="costKeyVal" [hidden]="!item.cost.Wood">&nbsp;Wood: {{item.cost.Wood}}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <p>Birimler: {{filteredUnits | json}}</p> -->
+</section>

@@ -7,8 +7,9 @@ import * as MOCK_UNITS from './data/age-of-empires-units.json';
 export default class UnitServiceMock {
 
     getUnitItems$(): Observable<UnitItem[]> {
-        let all = ObjectMapper.deserialize(UnitItemCapsule, MOCK_UNITS)
-        return of(all.units)
+        let all = MOCK_UNITS
+        let units = ObjectMapper.deserializeArray(UnitItem, all.default.units) // library have problems with jagged arrays
+        return of(units)
     }
 
 }

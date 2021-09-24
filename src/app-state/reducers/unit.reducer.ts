@@ -29,7 +29,7 @@ export const reducer = createReducer(
     on(unitActions.setAllItemsSuccess,
         (state, { items }) => {
             let itemsClone = _.cloneDeep(items)
-            let ageItems = ['All', 'Dark', 'Feudal', 'Castle', 'Imperial']
+            let ageItems = ['', 'Dark', 'Feudal', 'Castle', 'Imperial']
             let costItems = [new CostItem("Wood", false, 0), new CostItem("Gold", false, 0), new CostItem("Food", false, 0)]
             return { ...state, unitItems: itemsClone, ageItems: ageItems, costItems: costItems };
         }

@@ -14,13 +14,14 @@ export const selectFilteredUnits = createSelector(selectUnit, (s: UnitState) => 
     //second filter by cost item checkboxes and their sliders(all three to be true)
     let condition2 = s.costItems.map(ci => {
         let propVal: number = (unitItem.cost as any)[ci.name]
-        if (!propVal || (ci.checked && ci.slider == propVal)) {
+        if (!propVal || (ci.checked && ci.slider <= propVal)) {
             return true
         }
         return false;
     }).every(val => val == true)
 
     return condition1 && condition2;
+    //return true;
 }))
 
 export const selectAgeItems = createSelector(selectUnit, (s1: UnitState) => {
@@ -28,4 +29,8 @@ export const selectAgeItems = createSelector(selectUnit, (s1: UnitState) => {
 })
 export const selectCostItems = createSelector(selectUnit, (s1: UnitState) => {
     return s1.costItems
+})
+
+export const selectActiveAge = createSelector(selectUnit, (s1: UnitState)=>{
+    return s1.activeAge
 })
