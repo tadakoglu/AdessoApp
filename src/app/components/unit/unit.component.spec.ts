@@ -13,29 +13,27 @@ import { UnitDetailState } from 'src/app-state/reducers/unitDetail.reducer';
 describe('UnitComponent', () => {
   let component: UnitComponent;
   let fixture: ComponentFixture<UnitComponent>;
-  let store:MockStore
-  let initialState = { 
-    unit: {  
-      unitItems: [
-        new UnitItem(99,'test','test','test','age', new Cost(),0,0),
-        new UnitItem(22,'test','test','test','bbb', new Cost(),0,0)],
-      ageItems: ['age','test','xyz'],
-      activeAge: 'age',
-      costItems: [new CostItem("costname",true,22)], 
+  let store: MockStore
+  let initialState = {
+    unit: {
+      unitItems: [new UnitItem(33, 'test13', 'desc', 'exp', 'age1', new Cost(undefined, 30, 40)), new UnitItem(44, 'test13xx', 'desc', 'exp', 'age2', new Cost(55, 55, 40))],
+      ageItems: ['age1', 'age2'],
+      activeAge: 'age2',
+      costItems: [new CostItem('Wood', true, 22), new CostItem('Gold', true, 41)]
     },
-    unitDetail:{
+    unitDetail: {
       activeUnitItemId: 99
     }
-   }
+  }
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [UnitComponent],
-      providers: [provideMockStore({initialState})],
+      providers: [provideMockStore({ initialState })],
     })
       .compileComponents();
 
-      store = TestBed.inject(MockStore);
+    store = TestBed.inject(MockStore);
   }));
 
   beforeEach(() => {
@@ -51,18 +49,28 @@ describe('UnitComponent', () => {
   it("should selectFilteredUnits selector work properly ", () => {
 
     let s1: UnitState = {
-      unitItems: [new UnitItem(33, 'test13','desc','exp','age1',new Cost(undefined,30,40)), new UnitItem(44, 'test13','desc','exp','age2',new Cost(55,55,40))],
+      unitItems: [new UnitItem(33, 'test13', 'desc', 'exp', 'age1', new Cost(undefined, 30, 40)), new UnitItem(44, 'test13', 'desc', 'exp', 'age2', new Cost(55, 55, 40))],
       ageItems: ['age1', 'age2'],
       activeAge: 'age2',
       costItems: [new CostItem('Wood', true, 22), new CostItem('Gold', true, 41)]
     }
-  
 
 
-    const result:UnitItem[] = selectFilteredUnits.projector(s1)
+    const result: UnitItem[] = selectFilteredUnits.projector(s1)
 
     expect(result.length).toEqual(1);
     expect(result[0].id).toEqual(44);
+  });
+
+  it("should selectFilteredUnits selector refrects to HTML view properly ", () => {
+
+    const fixture = TestBed.createComponent(UnitComponent); //uses the mock store, and the initial filtered situation
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement; // htmlview
+    //fixture.debugElement component
+
+    expect(compiled.querySelector('table > * > tr:nth-child(1) > td:nth-child(2)').textContent).toContain('test13xx');
+
   });
 });
 
