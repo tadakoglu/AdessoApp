@@ -1,7 +1,8 @@
 /* tslint:disable:no-unused-variable */
+import { provideMockStore } from '@ngrx/store/testing';
 
-import { TestBed, async, inject } from '@angular/core/testing';
-import { UnitService } from './unit.service';
+import { TestBed, waitForAsync, inject } from '@angular/core/testing';
+import UnitService from './unit.service';
 
 describe('Service: Unit', () => {
   beforeEach(() => {
@@ -10,7 +11,8 @@ describe('Service: Unit', () => {
     });
   });
 
-  it('should ...', inject([UnitService], (service: UnitService) => {
+  it('should inject', inject([UnitService], (service: UnitService) => {
     expect(service).toBeTruthy();
   }));
 });
+

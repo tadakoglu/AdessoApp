@@ -7,7 +7,7 @@ export interface UnitDetailState {
     activeUnitItemId: number;
 };
 
-const initialState: UnitDetailState = {
+export const initialState: UnitDetailState = {
     activeUnitItemId: 0
 };
 

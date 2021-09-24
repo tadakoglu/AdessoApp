@@ -12,7 +12,7 @@
     <div class="costItem" *ngFor="let item of costItems">
         <mat-checkbox class="checkbox" (change)="setCostItemCheckbox(item.name, $event.checked)"
             [checked]="item.checked">{{item.name}}</mat-checkbox>
-        <mat-slider (change)="setCostItemSlider(item.name, $event.value )" class="slider" step="1" min="0" max="200"
+        <mat-slider [disabled]="!item.checked" (change)="setCostItemSlider(item.name, $event.value )" class="slider" step="1" min="0" max="200"
             [value]="item.slider" aria-label="units"></mat-slider>
         <span class="value">{{item.slider}}</span>
     </div>
