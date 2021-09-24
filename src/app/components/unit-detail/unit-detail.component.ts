@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { State } from 'src/app-state';
 import { UnitItem } from 'src/app-state/entity/unitItem.model';
 import { selectActiveUnit } from 'src/app-state/selectors/unitDetail.selectors';
@@ -12,12 +13,21 @@ import { selectActiveUnit } from 'src/app-state/selectors/unitDetail.selectors';
 })
 export class UnitDetailComponent implements OnInit {
 
-  public activeUnitItem: Observable<UnitItem | undefined>
+  public activeUnitItem: UnitItem | undefined
   constructor(private readonly store: Store<State>) {
-    this.activeUnitItem = this.store.select(selectActiveUnit)
+    this.store.select(selectActiveUnit).pipe(takeUntil(this.destroy$)).subscribe(val => {
+      this.activeUnitItem = val;
+    })
   }
 
   ngOnInit() {
+
   }
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
 }

@@ -18,6 +18,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatTableModule} from '@angular/material/table';
 import { FooterComponent } from './components/footer/footer.component';
+import { UnitDetailEffects } from 'src/app-state/effects/unitDetail.effects';
+import {MatTooltipModule} from '@angular/material/tooltip';
 @NgModule({
 
   declarations: [
@@ -33,11 +35,12 @@ import { FooterComponent } from './components/footer/footer.component';
     MatButtonToggleModule,
     MatCheckboxModule,
     MatSliderModule,
+    MatTooltipModule,
     FormsModule,
     MatTableModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([UnitEffects])
+    EffectsModule.forRoot([UnitEffects,UnitDetailEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

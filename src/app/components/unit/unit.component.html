@@ -28,7 +28,8 @@
             <th>COSTS</th>
         </thead>
         <tbody>
-            <tr *ngFor="let item of filteredUnits">
+            <!-- router link can be used in here-->
+            <tr  matTooltip="{{'Click on to go to ' + item.name + ' details'}}" (click)="setActiveUnit(item.id)" *ngFor="let item of filteredUnits">
                 <td>{{item.id}}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.age}}</td>

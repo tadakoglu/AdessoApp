@@ -1,3 +1,41 @@
+<h1>{{'Unit Detail Page'}}</h1>
 <p>
-  unit-detail works!
+    <a [routerLink]="[ '/unit' ]">Geri</a>
 </p>
+
+<section *ngIf="activeUnitItem; else notSelected">
+  <!-- <h3>Filtered Units</h3> -->
+  <table>
+      <thead>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Wood Cost</th>
+          <th>Food Cost</th>
+          <th>Gold Cost</th>
+          <th>Build time</th>
+          <th>Reload time</th>
+          <th>Hit points</th>
+          <th>Attack</th>
+          <th>Accuracy</th>
+      </thead>
+      <tbody>
+          <tr >
+              <td>{{activeUnitItem.id}}</td>
+              <td>{{activeUnitItem.name}}</td>
+              <td>{{activeUnitItem.age}}</td>
+              <td>{{activeUnitItem.cost.Wood}}</td>
+              <td>{{activeUnitItem.cost.Food}}</td>
+              <td>{{activeUnitItem.cost.Gold}}</td>
+              <td>{{activeUnitItem.build_time}}</td>
+              <td>{{activeUnitItem.reload_time}}</td>
+              <td>{{activeUnitItem.hit_points}}</td>
+              <td>{{activeUnitItem.attack}}</td> 
+              <td>{{activeUnitItem.accuracy}}</td>
+          </tr>
+      </tbody>
+  </table>
+  <!-- <p>Birimler: {{filteredUnits | json}}</p> -->
+</section>
+
+<ng-template #notSelected>Bir birim seçilmedi.</ng-template>
