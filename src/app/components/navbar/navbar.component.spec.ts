@@ -1,30 +1,38 @@
-/* tslint:disable:no-unused-variable */
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { NavbarComponent } from './navbar.component';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { RouterModule } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
+import { routes } from "src/app/app-routing.module";
+import { NavbarComponent } from "./navbar.component";
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
-
-  beforeEach(waitForAsync(() => {
+  
+  beforeEach(() => {
     TestBed.configureTestingModule({
+      imports:[RouterTestingModule.withRoutes(routes)],
       declarations: [NavbarComponent],
-      imports: [RouterTestingModule],
+      
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
+   
     fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // it('navigating to "" redirect you to /home',fakeAsync(()=>{
+  //   router.navigate([''])
+  //   tick() // wait all promises to be solved
+  //   console.log(location.path)
+  //   expect(location.path).toEqual('/home')
+
+  // }))
 });
