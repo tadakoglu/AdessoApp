@@ -28,8 +28,7 @@ describe('UnitComponent', () => {
       activeUnitItemId: 99
     }
   }
-  
-  let matToggleGroupEl: MatButtonToggleGroup;
+
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -40,7 +39,6 @@ describe('UnitComponent', () => {
 
     store = TestBed.inject(MockStore);
 
-    matToggleGroupEl = fixture.debugElement.query(By.directive(MatButtonToggleGroup)).injector.get<MatButtonToggleGroup>(MatButtonToggleGroup)
 
   }));
 
@@ -54,12 +52,12 @@ describe('UnitComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('shoud mat button toggle group select age when component input property activeAge changed', ()=>{
-    component.activeAge = 'age1' // from age2
-    fixture.detectChanges();
+  // it('shoud mat button toggle group select age when component input property activeAge changed', ()=>{
+  //   component.activeAge = 'age1' // from age2
+  //   fixture.detectChanges();
     
 
-  })
+  // })
 
   it("should selectFilteredUnits selector work properly ", () => {
 
