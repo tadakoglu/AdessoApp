@@ -46,22 +46,17 @@ export class UnitWithReactiveFormsComponent implements OnInit {
 
 
   createFilterForm() {
-    this.filterForm = this.formBuilder.group({
-      FormControlAgeRadio: [this.activeAge, []],
-      FormControlCostItems: new FormGroup({})
-    })
-
-    // //Alternative form group creation with classes 
-    // this.filterForm = new FormGroup({
-    //   FormControlAgeRadio: new FormControl(this.activeAge, []),
-    //   FormControlCostItems: new FormArray([]) // form array items are registered with name of index
-    // });
+    
+    //Alternative form group creation with classes 
+    this.filterForm = new FormGroup({
+      FormControlAgeRadio: new FormControl(this.activeAge, []),
+      FormControlCostItems: new FormArray([]) // form array items are registered with name of index
+    });
 
     this.costItems.forEach((ci, i, arr) => {
       // let formGroup = this.formBuilder.group({ FormControlCheckbox: [ci.checked, []], FormControlSlider: [ci.slider, []] })
-      (this.filterForm.get('FormControlCostItems') as FormGroup).
-        addControl(ci.name,
-          new FormGroup({ FormControlCheckbox: new FormControl(ci.checked), FormControlSlider: new FormControl(ci.slider) }))
+      (this.filterForm.get('FormControlCostItems') as FormArray).
+        push(new FormGroup({ FormControlCheckbox: new FormControl(ci.checked), FormControlSlider: new FormControl({value:ci.slider,disabled: !ci.checked}) }))
     })
 
     this.filterForm.valueChanges.subscribe((form) => {
@@ -79,10 +74,10 @@ export class UnitWithReactiveFormsComponent implements OnInit {
   }
 
   get FormControlCostItems() {
-    return this.filterForm.controls['FormControlCostItems'] as FormGroup
+    return this.filterForm.controls['FormControlCostItems'] as FormArray
   }
   getFormControlCheckboxByFormGroupIndexOrName(i: any): FormControl { // controls in formArray named with index name
-    return (((this.filterForm.controls['FormControlCostItems'] as FormGroup).get(i.toString())) as FormGroup).get('FormControlCheckbox') as FormControl
+    return (((this.filterForm.controls['FormControlCostItems'] as FormArray).get(i.toString())) as FormGroup).get('FormControlCheckbox') as FormControl
   }
   getFormControlSliderByFormGroupIndexOrName(i: any): FormControl {
     //return (((this.filterForm.controls['FormControlCostItems'] as FormArray).at(i)) as  FormGroup).get('FormControlSlider') as FormControl
@@ -94,14 +89,18 @@ export class UnitWithReactiveFormsComponent implements OnInit {
     if (this.filterForm.valid) {
       console.log()
 
-      let age = this.filterForm.controls['FormControlAgeRadio'].value
-      let costItems = this.filterForm.controls['FormControlCostItems'].value
+      console.log('active' + this.filterForm.controls['FormControlAgeRadio'].value)
 
+      this.FormControlCostItems.controls.forEach( (formGroup, inx,arr) =>{
+        console.log('checkbox' + ((formGroup as FormGroup).controls['FormControlCheckbox'] as FormControl).value);
+        console.log('slider' + ((formGroup as FormGroup).controls['FormControlSlider'] as FormControl).value);
+        let ci = this.costItems[inx].name
+        
+      })
       //dispatchAllAtOnce
 
     }
 
-    console.log('invalid' + JSON.stringify(this.filterForm.value))
   }
 
 

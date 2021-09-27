@@ -12,14 +12,20 @@
 
   <section>
     <h3>Costs</h3>
-    <ng-container formGroupName="FormControlCostItems">
-      <div class="costItem" formGroupName="{{costItem.name}}" *ngFor="let costItem of costItems; let i=index">
-        <mat-checkbox class="checkbox" (change)="checkedEvent($event, costItem.name)"
+    <ng-container formArrayName="FormControlCostItems">
+      <div class="costItem" *ngFor="let costItem of FormControlCostItems.controls; let i=index">
+        <ng-container formGroupName="{{i}}">
+
+          <mat-checkbox class="checkbox" (change)="checkedEvent($event, i)"
           formControlName="FormControlCheckbox"></mat-checkbox>
         <mat-slider class="slider" formControlName="FormControlSlider" step="1" min="0" max="200" aria-label="units">
         </mat-slider>
-        <span class="value">{{getFormControlSliderByFormGroupIndexOrName(costItem.name).value}}</span>
-        <span class="value">{{getFormControlCheckboxByFormGroupIndexOrName(costItem.name).value ? 'Slide' :''}}</span>
+        <span class="value">{{getFormControlSliderByFormGroupIndexOrName(i).value}}</span>
+        <span class="value">{{getFormControlCheckboxByFormGroupIndexOrName(i).value ? 'Slide' :''}}</span>
+        
+        </ng-container>
+        
+       
       </div>
     </ng-container>
   </section>
