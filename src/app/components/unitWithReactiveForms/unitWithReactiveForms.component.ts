@@ -56,7 +56,7 @@ export class UnitWithReactiveFormsComponent implements OnInit {
     this.costItems.forEach((ci, i, arr) => {
       // let formGroup = this.formBuilder.group({ FormControlCheckbox: [ci.checked, []], FormControlSlider: [ci.slider, []] })
       (this.filterForm.get('FormControlCostItems') as FormArray).
-        push(new FormGroup({ FormControlCheckbox: new FormControl(ci.checked), FormControlSlider: new FormControl({value:ci.slider,disabled: !ci.checked}) }))
+        push(new FormGroup({ FormControlCheckbox: new FormControl(ci.checked,Validators.required), FormControlSlider: new FormControl({value:ci.slider,disabled: !ci.checked}) }))
     })
 
     this.filterForm.valueChanges.subscribe((form) => {
