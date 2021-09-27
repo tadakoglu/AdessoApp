@@ -28,12 +28,10 @@ export class UnitComponent implements OnInit {
     this.store.select(selectFilteredUnits).subscribe(items => this.filteredUnits = items)
   }
 
-
-
-
-
   ngOnInit() {
   }
+
+  
   setActiveAge(age: string) {
     this.store.dispatch(UnitActions.setActiveAgeItem({ age: age }))
   }

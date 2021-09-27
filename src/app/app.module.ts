@@ -16,31 +16,33 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { FooterComponent } from './components/footer/footer.component';
 import { UnitDetailEffects } from 'src/app-state/effects/unitDetail.effects';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { UnitWithReactiveFormsComponent } from './components/unitWithReactiveForms/unitWithReactiveForms.component';
+import {MatButtonModule} from '@angular/material/button';
 @NgModule({
 
   declarations: [
     AppComponent, HomeComponent, UnitComponent, UnitDetailComponent,
-    NavbarComponent, FooterComponent
+    NavbarComponent, FooterComponent, UnitWithReactiveFormsComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     MatButtonToggleModule,
     MatCheckboxModule,
     MatSliderModule,
     MatTooltipModule,
-    FormsModule,
     MatTableModule,
-    ReactiveFormsModule,
+    MatButtonModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([UnitEffects,UnitDetailEffects])
+    EffectsModule.forRoot([UnitEffects, UnitDetailEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

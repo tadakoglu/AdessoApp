@@ -1,0 +1,58 @@
+<h1>{{'Units Page'}}</h1>
+
+
+<form [formGroup]="filterForm" (ngSubmit)="submitFilterForm($event)">
+
+  <section>
+    <h3>Ages</h3>
+    <mat-button-toggle-group formControlName="FormControlAgeRadio">
+      <mat-button-toggle *ngFor="let item of ageItems" value="{{item}}">{{item=='' ? 'All': item}}</mat-button-toggle>
+    </mat-button-toggle-group>
+  </section>
+
+  <section>
+    <h3>Costs</h3>
+    <ng-container formGroupName="FormControlCostItems">
+      <div class="costItem" [formGroupName]="costItem.name" *ngFor="let costItem of costItems; let i=index">
+        <mat-checkbox class="checkbox" (change)="checkedEvent($event, costItem.name)"
+          formControlName="FormControlCheckbox"></mat-checkbox>
+        <mat-slider class="slider" formControlName="FormControlSlider" step="1" min="0" max="200" aria-label="units">
+        </mat-slider>
+        <span class="value">{{getFormControlSliderByFormGroupIndexOrName(costItem.name).value}}</span>
+        <span class="value">{{getFormControlCheckboxByFormGroupIndexOrName(costItem.name).value ? 'Slide' :''}}</span>
+      </div>
+    </ng-container>
+  </section>
+
+  <button type="submit" mat-raised-button color="primary">Filter</button>
+</form>
+
+
+
+
+<section>
+  <h3>Filtered Units</h3>
+  <table>
+    <thead>
+      <th>ID</th>
+      <th>NAME</th>
+      <th>AGE</th>
+      <th>COSTS</th>
+    </thead>
+    <tbody>
+      <!-- router link can be used in here-->
+      <tr matTooltip="{{'Click on to go to ' + item.name + ' details'}}" (click)="setActiveUnit(item.id)"
+        *ngFor="let item of filteredUnits">
+        <td>{{item.id}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.age}}</td>
+        <td>
+          <span class="costKeyVal" [hidden]="!item.cost.Food">&nbsp;Food: {{item.cost.Food}}</span>
+          <span class="costKeyVal" [hidden]="!item.cost.Gold">&nbsp;Gold: {{item.cost.Gold}}</span>
+          <span class="costKeyVal" [hidden]="!item.cost.Wood">&nbsp;Wood: {{item.cost.Wood}}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <p>Birimler: {{filteredUnits | json}}</p> -->
+</section>
