@@ -32,15 +32,14 @@ export class UnitWithReactiveFormsComponent implements OnInit {
       this.store.select(selectAgeItems),
       this.store.select(selectActiveAge),
       this.store.select(selectCostItems),
-      this.store.select(selectFilteredUnits)
-    ]).pipe(take(1)).subscribe(([obsAgeItemsVal, obsActiveAgeVal, obsCostItemsVal, obsFilteredUnitsVal]) => {
+    ]).pipe(take(1)).subscribe(([obsAgeItemsVal, obsActiveAgeVal, obsCostItemsVal]) => {
       this.ageItems = obsAgeItemsVal;
       this.activeAge = obsActiveAgeVal;
       this.costItems = obsCostItemsVal;
-      this.filteredUnits = obsFilteredUnitsVal;
       this.createFilterForm();
-
     })
+
+    this.store.select(selectFilteredUnits).subscribe(val => this.filteredUnits = val);
   }
 
   ngOnInit() { }
@@ -93,7 +92,13 @@ export class UnitWithReactiveFormsComponent implements OnInit {
 
   submitFilterForm(event: any) {
     if (this.filterForm.valid) {
-      console.log(this.filterForm.value)
+      console.log()
+
+      let age = this.filterForm.controls['FormControlAgeRadio'].value
+      let costItems = this.filterForm.controls['FormControlCostItems'].value
+
+      //dispatchAllAtOnce
+
     }
 
     console.log('invalid' + JSON.stringify(this.filterForm.value))

@@ -13,7 +13,7 @@
   <section>
     <h3>Costs</h3>
     <ng-container formGroupName="FormControlCostItems">
-      <div class="costItem" [formGroupName]="costItem.name" *ngFor="let costItem of costItems; let i=index">
+      <div class="costItem" formGroupName="{{costItem.name}}" *ngFor="let costItem of costItems; let i=index">
         <mat-checkbox class="checkbox" (change)="checkedEvent($event, costItem.name)"
           formControlName="FormControlCheckbox"></mat-checkbox>
         <mat-slider class="slider" formControlName="FormControlSlider" step="1" min="0" max="200" aria-label="units">
