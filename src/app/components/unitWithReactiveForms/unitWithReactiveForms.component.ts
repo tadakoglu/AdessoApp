@@ -46,17 +46,17 @@ export class UnitWithReactiveFormsComponent implements OnInit {
 
 
   createFilterForm() {
-    
+
     //Alternative form group creation with classes 
     this.filterForm = new FormGroup({
-      FormControlAgeRadio: new FormControl(this.activeAge, []),
+      FormControlAgeRadio: new FormControl(this.activeAge, [Validators.required]),
       FormControlCostItems: new FormArray([]) // form array items are registered with name of index
     });
 
     this.costItems.forEach((ci, i, arr) => {
       // let formGroup = this.formBuilder.group({ FormControlCheckbox: [ci.checked, []], FormControlSlider: [ci.slider, []] })
       (this.filterForm.get('FormControlCostItems') as FormArray).
-        push(new FormGroup({ FormControlCheckbox: new FormControl(ci.checked,Validators.required), FormControlSlider: new FormControl({value:ci.slider,disabled: !ci.checked}) }))
+        push(new FormGroup({ FormControlCheckbox: new FormControl(ci.checked), FormControlSlider: new FormControl({ value: ci.slider, disabled: !ci.checked },) }))
     })
 
     this.filterForm.valueChanges.subscribe((form) => {
@@ -85,18 +85,24 @@ export class UnitWithReactiveFormsComponent implements OnInit {
   }
 
 
-  submitFilterForm(event: any) {
+  //activeAgeFormResult: string = ''
+  // costItemsFormResult: CostItem[] = []
+  submitFilterForm() {
     if (this.filterForm.valid) {
       console.log()
 
       console.log('active' + this.filterForm.controls['FormControlAgeRadio'].value)
-
-      this.FormControlCostItems.controls.forEach( (formGroup, inx,arr) =>{
-        console.log('checkbox' + ((formGroup as FormGroup).controls['FormControlCheckbox'] as FormControl).value);
-        console.log('slider' + ((formGroup as FormGroup).controls['FormControlSlider'] as FormControl).value);
-        let ci = this.costItems[inx].name
-        
+      this.activeAge = this.filterForm.controls['FormControlAgeRadio'].value;
+      let costItemsTemp: CostItem[] = []
+      this.FormControlCostItems.controls.forEach((formGroup, inx, arr) => {
+        let ci = new CostItem();
+        ci.name = this.costItems[inx].name
+        ci.checked = ((formGroup as FormGroup).controls['FormControlCheckbox'] as FormControl).value
+        ci.slider = ((formGroup as FormGroup).controls['FormControlSlider'] as FormControl).value
+        console.log(JSON.stringify(ci))
+        costItemsTemp.push(ci)
       })
+      this.costItems = costItemsTemp
       //dispatchAllAtOnce
 
     }
