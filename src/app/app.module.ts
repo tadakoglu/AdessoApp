@@ -22,6 +22,8 @@ import { UnitDetailEffects } from 'src/app-state/effects/unitDetail.effects';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UnitWithReactiveFormsComponent } from './components/unitWithReactiveForms/unitWithReactiveForms.component';
 import {MatButtonModule} from '@angular/material/button';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+
 @NgModule({
 
   declarations: [
@@ -42,7 +44,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatTableModule,
     MatButtonModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([UnitEffects, UnitDetailEffects])
+    EffectsModule.forRoot([UnitEffects, UnitDetailEffects]),
+    StoreRouterConnectingModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
