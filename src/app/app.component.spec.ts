@@ -14,10 +14,12 @@ import { By } from '@angular/platform-browser';
 import { routes } from './app-routing.module';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common'
+import { UnitDetailEffects } from 'src/app-state/effects/unitDetail.effects';
 
 describe('AppComponent', () => {
   let actions$: Observable<Action>
   let unitEffects: UnitEffects
+  let unitDetailEffects: UnitDetailEffects
   let unitService: UnitService
   let store: MockStore
 
@@ -51,8 +53,8 @@ describe('AppComponent', () => {
         // ],
       }),
       provideMockActions(() => actions$),
-        UnitEffects, UnitService,
-      
+        UnitEffects, UnitService, UnitDetailEffects
+
       ],
       declarations: [
         AppComponent
@@ -64,6 +66,7 @@ describe('AppComponent', () => {
     //activatedRoute = TestBed.inject(ActivatedRoute)
     store = TestBed.inject(MockStore)
     unitEffects = TestBed.inject(UnitEffects)
+    unitDetailEffects = TestBed.inject(UnitDetailEffects)
     unitService = TestBed.inject(UnitService);
 
     fixture = TestBed.createComponent(AppComponent)
@@ -111,10 +114,15 @@ describe('AppComponent', () => {
       })
     })
 
+  })
 
-
-
-
+  it('should navigateTo effects navigate to units details page propertly', () => {
+    actions$ = of({ type: '[Unit Detail Page] SET_ACTIVE_UNIT', id: 2 }) // emit once when subscribed
+    spyOn(router, 'navigate')
+    unitDetailEffects.navigateToDetails$.subscribe(resp => {
+      expect(resp).toEqual({ type: '[Unit Detail Page] SET_ACTIVE_UNIT', id: 2 }) // no transform operators
+      expect(router.navigate).toHaveBeenCalledWith(['/unit-detail/' + resp.id])
+    })
   })
 
 
@@ -154,7 +162,7 @@ describe('AppComponent', () => {
     router.navigate(['/unit-detail/3'])
     tick();
     expect(location.path()).toBe('/unit-detail/3')
-    
+
 
   }))
 
@@ -166,14 +174,14 @@ describe('AppComponent', () => {
 
   })
 
-  it('should navigate unit-detail/3 when called unit-detail/3 with waitForAsync', waitForAsync( () => {
-    router.navigate(['/unit-detail/3']).then( val=>{ // or await
+  it('should navigate unit-detail/3 when called unit-detail/3 with waitForAsync', waitForAsync(() => {
+    router.navigate(['/unit-detail/3']).then(val => { // or await
       expect(location.path()).toBe('/unit-detail/3')
     })
   }))
 
-  it('should navigate unit-detail/3 when called unit-detail/3 with done',  (done) => {
-    router.navigate(['/unit-detail/3']).then( val=>{
+  it('should navigate unit-detail/3 when called unit-detail/3 with done', (done) => {
+    router.navigate(['/unit-detail/3']).then(val => {
       expect(location.path()).toBe('/unit-detail/3')
       done()
     })

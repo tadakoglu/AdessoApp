@@ -13,8 +13,8 @@ export class UnitDetailEffects {
         private router: Router) { }
 
 
-
-    effectName$ = createEffect(
+        
+    navigateToDetails$ = createEffect(
         () => this.actions$.pipe(
             ofType(unitDetailActions.setActiveUnit),
             tap(({id}) => this.router.navigate(['/unit-detail/' + id]))
