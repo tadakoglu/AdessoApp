@@ -82,12 +82,15 @@ describe('UnitDetailComponent', () => {
       activeAge: '',
       costItems: []
     }
-    let s2: UnitDetailState = {
-      activeUnitItemId: 45
+    // let s2: UnitDetailState = {
+    //   activeUnitItemId: 45
+    // }
+    let params = {
+      UnitId:45
     }
 
 
-    const result:UnitItem|undefined = selectActiveUnit.projector(s1, s2)
+    const result:UnitItem|undefined = selectActiveUnit.projector(s1, params)
 
     expect(result?.name).toEqual('test1');
   });

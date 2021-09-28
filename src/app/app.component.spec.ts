@@ -15,6 +15,8 @@ import { routes } from './app-routing.module';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common'
 import { UnitDetailEffects } from 'src/app-state/effects/unitDetail.effects';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { selectActiveUnit } from 'src/app-state/selectors/unitDetail.selectors';
 
 describe('AppComponent', () => {
   let actions$: Observable<Action>
@@ -44,13 +46,12 @@ describe('AppComponent', () => {
             costItems: [],
           },
           unitDetail: {
-            activeUnitItemId: 0
+            activeUnitItemId: 3
           }
         },
-        // selectors: [
-        //   { selector: selectActiveAge, value: ['Book 1', 'Book 2'] },
-        //   { selector: selectVisibleBooks, value: ['Book 1'] },
-        // ],
+        selectors: [
+          { selector: selectActiveUnit, value: new UnitItem(3) },
+        ],
       }),
       provideMockActions(() => actions$),
         UnitEffects, UnitService, UnitDetailEffects
@@ -116,12 +117,13 @@ describe('AppComponent', () => {
 
   })
 
-  it('should navigateTo effects navigate to units details page propertly', () => {
+  it('should navigateTo effects navigate to units details page propertly', (done) => {
     actions$ = of({ type: '[Unit Detail Page] SET_ACTIVE_UNIT', id: 2 }) // emit once when subscribed
     spyOn(router, 'navigate')
     unitDetailEffects.navigateToDetails$.subscribe(resp => {
       expect(resp).toEqual({ type: '[Unit Detail Page] SET_ACTIVE_UNIT', id: 2 }) // no transform operators
       expect(router.navigate).toHaveBeenCalledWith(['/unit-detail/' + resp.id])
+      done()
     })
   })
 
