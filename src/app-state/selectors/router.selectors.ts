@@ -1,7 +1,10 @@
 import { getSelectors, RouterReducerState } from '@ngrx/router-store';
-import { createFeatureSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { State } from '..';
 
-//export const selectRouter = createFeatureSelector<RouterReducerState>('router');
+export const selectRouter = createFeatureSelector<RouterReducerState>('router')
+
+
 
 export const {
   selectCurrentRoute, // select the current route

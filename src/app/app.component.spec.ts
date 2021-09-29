@@ -15,8 +15,9 @@ import { routes } from './app-routing.module';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common'
 import { UnitDetailEffects } from 'src/app-state/effects/unitDetail.effects';
-import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { selectActiveUnit } from 'src/app-state/selectors/unitDetail.selectors';
+import { selectRouter } from 'src/app-state/selectors/router.selectors';
 
 describe('AppComponent', () => {
   let actions$: Observable<Action>
@@ -35,7 +36,7 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule.withRoutes(routes)
+        RouterTestingModule.withRoutes(routes),
       ],
       providers: [provideMockStore({
         initialState: {
@@ -49,6 +50,7 @@ describe('AppComponent', () => {
             activeUnitItemId: 3
           }
         },
+        
         selectors: [
           { selector: selectActiveUnit, value: new UnitItem(3) },
         ],
@@ -74,9 +76,6 @@ describe('AppComponent', () => {
 
     component = fixture.componentInstance
     compiled = fixture.debugElement;
-
-
-
 
     router.initialNavigation();
   });
@@ -104,7 +103,7 @@ describe('AppComponent', () => {
 
 
     unitEffects.setAllItems$.subscribe(resp => {
-      done()
+   
       expect(spy).toHaveBeenCalled()
 
       expect(resp.type).toEqual('[Unit Page] SET_ALL_ITEMS_SUCCESS')
@@ -113,6 +112,7 @@ describe('AppComponent', () => {
         type: '[Unit Page] SET_ALL_ITEMS_SUCCESS'
         , items: [new UnitItem(), new UnitItem(2, 'unit2')]
       })
+      done()
     })
 
   })
@@ -125,6 +125,8 @@ describe('AppComponent', () => {
       expect(router.navigate).toHaveBeenCalledWith(['/unit-detail/' + resp.id])
       done()
     })
+
+
   })
 
 
@@ -163,6 +165,7 @@ describe('AppComponent', () => {
   it('should navigate unit-detail/3 when called unit-detail/3  and fakeasync', fakeAsync(() => {
     router.navigate(['/unit-detail/3'])
     tick();
+    console.log('PATHHH' + location.path())
     expect(location.path()).toBe('/unit-detail/3')
 
 

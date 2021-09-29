@@ -35,8 +35,9 @@ describe('UnitDetailComponent', () => {
           }
         },
         selectors: [
-          { selector: selectActiveUnit, value: new UnitItem(99, 'test', 'test', 'test', 'age', new Cost(), 0, 0) },
+          { selector: selectActiveUnit, value: new UnitItem(3) },
         ],
+       
       })],
     })
       .compileComponents();
