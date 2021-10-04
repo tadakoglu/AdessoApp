@@ -1,4 +1,4 @@
-# AdessoApp
+# AdessoApp (Reactive)
 
 ![alt text](https://github.com/tadakoglu/AdessoApp/blob/main/ss1.png)
 ![alt text](https://github.com/tadakoglu/AdessoApp/blob/main/ss2.png)
